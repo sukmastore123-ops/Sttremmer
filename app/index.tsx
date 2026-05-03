@@ -253,6 +253,9 @@ export default function MainScreen() {
           ref={publisherRef}
           streamURL={config.rtmpUrl.trim().replace(/\/$/, "")}
           streamName={config.streamKey.trim()}
+          cameraFacing={cameraFacing}
+          videoQuality={settings.resolution === "1080p" ? "1080p" : "720p"}
+          audioBitrate={settings.audioBitrate}
           onConnectionStarted={handleConnectionStarted}
           onConnectionSuccessful={handleConnectionSuccessful}
           onConnectionFailed={handleConnectionFailed}

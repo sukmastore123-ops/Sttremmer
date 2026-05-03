@@ -10,6 +10,8 @@ jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,16 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Setup EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Verify Expo login
+        run: eas whoami
 
       - name: Build APK (preview)
         run: eas build --platform android --profile preview --non-interactive
 
       - name: Build complete
         run: |
-          echo "APK siap di:"
+          echo "============================================"
+          echo "Build selesai! Download APK di:"
           echo "https://expo.dev/accounts/sukmastore/projects/streameryoutube3/builds"
+          echo "============================================"
